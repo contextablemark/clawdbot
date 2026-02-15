@@ -1,0 +1,19 @@
+{
+  "name": "@openclaw/telephony",
+  "version": "2026.2.15",
+  "private": true,
+  "description": "OpenClaw unified telephony channel plugin (SMS/Voice via Twilio, Telnyx, Plivo)",
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "openclaw": "workspace:*"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

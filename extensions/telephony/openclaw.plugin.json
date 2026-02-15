@@ -1,0 +1,101 @@
+{
+  "id": "telephony",
+  "channels": ["telephony"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable the telephony channel"
+      },
+      "provider": {
+        "type": "string",
+        "enum": ["twilio", "telnyx", "plivo", "mock"],
+        "description": "SMS/Voice provider"
+      },
+      "fromNumber": {
+        "type": "string",
+        "description": "Phone number to send from (E.164 format)"
+      },
+      "inboundPolicy": {
+        "type": "string",
+        "enum": ["disabled", "allowlist", "pairing", "open"],
+        "default": "pairing",
+        "description": "How to handle inbound messages from unknown senders"
+      },
+      "allowFrom": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": [],
+        "description": "Phone numbers allowed to send inbound messages (E.164)"
+      },
+      "twilio": {
+        "type": "object",
+        "properties": {
+          "accountSid": { "type": "string" },
+          "authToken": { "type": "string" },
+          "messagingServiceSid": { "type": "string" }
+        }
+      },
+      "telnyx": {
+        "type": "object",
+        "properties": {
+          "apiKey": { "type": "string" },
+          "messagingProfileId": { "type": "string" },
+          "publicKey": { "type": "string" }
+        }
+      },
+      "plivo": {
+        "type": "object",
+        "properties": {
+          "authId": { "type": "string" },
+          "authToken": { "type": "string" }
+        }
+      },
+      "sms": {
+        "type": "object",
+        "properties": {
+          "chunkMode": {
+            "type": "string",
+            "enum": ["auto", "single", "multi"],
+            "default": "auto"
+          },
+          "maxLength": { "type": "number", "default": 1600 },
+          "segmentNumbering": { "type": "boolean", "default": true }
+        }
+      },
+      "voice": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean", "default": false },
+          "maxDurationSeconds": { "type": "number", "default": 300 }
+        }
+      },
+      "serve": {
+        "type": "object",
+        "properties": {
+          "port": { "type": "number", "default": 3335 },
+          "bind": { "type": "string", "default": "127.0.0.1" },
+          "path": { "type": "string", "default": "/telephony/webhook" },
+          "statusPath": { "type": "string", "default": "/telephony/status" }
+        }
+      },
+      "tunnel": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["none", "ngrok", "tailscale-serve", "tailscale-funnel"],
+            "default": "none"
+          },
+          "ngrokAuthToken": { "type": "string" },
+          "ngrokDomain": { "type": "string" }
+        }
+      },
+      "publicUrl": { "type": "string" },
+      "skipSignatureVerification": { "type": "boolean", "default": false }
+    }
+  }
+}
